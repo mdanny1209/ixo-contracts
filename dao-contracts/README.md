@@ -39,6 +39,8 @@ on the `v1.0.0` tag. An audit for the v2 contracts is forthcoming.
 Information about our development workflow and how to contribute can
 be found in [CONTRIBUTING.md](./CONTRIBUTING.md).
 
+Instantiation info can be found [here](./setup.md).
+
 ## Testing
 
 ### Unit tests
