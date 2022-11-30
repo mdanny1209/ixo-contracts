@@ -1,13 +1,13 @@
 # Contract setup
 
-This is a guide for what is required to run these contracts in their modular form.
+This guide describes how to instantiate the ixo DAO smart contract system, which is based on a fork of [DAO-DAO](https://github.com/DA0-DA0).
 
-To start off with you will need to compile the core contract and any other modules you may require,
-Note that you may have many proposal modules but only one voting module active on any one instance of the core contract, multiple core contracts may be instantiated
+Start by compiling the `core` [CW-4 Group](https://github.com/CosmWasm/cw-plus/tree/main/contracts/cw4-group) CosmWasm Contract and any of the other modules that are required to extend the Group functionality.
+For each Group Contract, multiple types of governance `proposal` modules may be added.
+However, only one type of `voting` module may be used by a Group.   
+Multiple `core contracts` may be instantiated at the same time.
 
-This contract setup relies on the cw4-group contract that can be found [here](https://github.com/CosmWasm/cw-plus/tree/main/contracts/cw4-group)
-
-To begin you must store all of your contracts on chain using:
+Store all the required contracts on-chain using the `ixod` CLI client:
 
 ```
 export TXFLAG="--node http://localhost:26657 --chain-id CHAIN ID --gas-prices 0.025uixo --gas auto --gas-adjustment 1.3"
@@ -15,18 +15,15 @@ export TXFLAG="--node http://localhost:26657 --chain-id CHAIN ID --gas-prices 0.
 ixod tx wasm store core.wasm --from ACCOUNT $TXFLAG -y --output json -b block
 ```
 
-Make sure to take note of the code ID provided as you will need them later
+Take note of the `code ID` values that are displayed, which will be required at a later step.
 
 ##Process
 
-The core contract is the main instatiation that needs to happen,
+Instantiating the `core` contract automatically instantiates all the dependent modules provided to it. 
+The `core` contract routes messages to dependent modules for execution.
+This requires providing the `core` contract with the code-ID and instatiation messages for each dependent module, which are found in the `msg.rs` file for each contract. 
 
-The core contract will take care of instantiating the modules provided to it and will communicate.
-
-when querying the core contract with route the messages to the required contract and the core will do the execution.
-
-to do this we will need to provide the core contract with the code Ids and instatiation messages of each module,
-These messages can be found in the `msg.rs` file for each contract, below is an example of what the core contract instatiation message may look like.
+The following is an example of what a core contract instatiation message might look like:
 
 ```
 {
@@ -59,9 +56,9 @@ These messages can be found in the `msg.rs` file for each contract, below is an 
 }
 ```
 
-##Core contract messages
+##Core Contract Messages
 
-###instantiate
+###Instantiate Message
 
 ```
 pub struct InstantiateMsg {
@@ -255,4 +252,4 @@ pub enum QueryMsg {
 }
 ```
 
-For more information on how these contracts were designed you can view the official documentation [here](https://github.com/DA0-DA0/dao-contracts/wiki/DAO-DAO-Contracts-Design)
+For more information on how these contracts were designed, see the official documentation from [DAO-DAO](https://github.com/DA0-DA0/dao-contracts/wiki/DAO-DAO-Contracts-Design)
