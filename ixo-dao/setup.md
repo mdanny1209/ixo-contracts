@@ -17,7 +17,7 @@ ixod tx wasm store core.wasm --from ACCOUNT $TXFLAG -y --output json -b block
 
 Take note of the `code ID` values that are displayed, which will be required at a later step.
 
-##Process
+## Process
 
 Instantiating the `core` contract automatically instantiates all the dependent modules provided to it. 
 The `core` contract routes messages to dependent modules for execution.
@@ -56,9 +56,9 @@ The following is an example of what a core contract instatiation message might l
 }
 ```
 
-##Core Contract Messages
+## Core Contract Messages
 
-###Instantiate Message
+### Instantiate Message
 
 ```
 pub struct InstantiateMsg {
@@ -100,7 +100,7 @@ pub struct InstantiateMsg {
 }
 ```
 
-###Execute Message
+### Execute Message
 ```
 pub enum ExecuteMsg {
     /// Callable by the Admin, if one is configured.
@@ -181,7 +181,7 @@ pub enum ExecuteMsg {
 }
 ```
 
-###Query Message
+### Query Message
 
 ```
 pub enum QueryMsg {
