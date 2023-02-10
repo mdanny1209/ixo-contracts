@@ -14,7 +14,6 @@ pub struct Cw1155ReceiveMsg {
     pub token_id: TokenId,
     pub amount: Uint128,
     pub msg: Binary,
-
 }
 
 impl Cw1155ReceiveMsg {

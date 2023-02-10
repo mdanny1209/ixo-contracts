@@ -44,7 +44,7 @@ pub fn execute(
             token_id,
             value,
             msg,
-        } => execute::send_from(env, from, to, token_id, value, msg), 
+        } => execute::send_from(env, from, to, token_id, value, msg),
         Cw1155ExecuteMsg::BatchSendFrom {
             from,
             to,
@@ -53,11 +53,11 @@ pub fn execute(
         } => execute::batch_send_from(env, from, to, batch, msg),
         Cw1155ExecuteMsg::Mint {
             to,
-            token_id, 
+            token_id,
             value,
-            uri,
+            uri
             msg,
-        } => execute::mint(env, to, token_id, value,uri, msg),
+        } => execute::mint(env, to, token_id, value, uri, msg),
         Cw1155ExecuteMsg::BatchMint { to, batch, msg } => execute::batch_mint(env, to, batch, msg),
         Cw1155ExecuteMsg::Burn {
             from,

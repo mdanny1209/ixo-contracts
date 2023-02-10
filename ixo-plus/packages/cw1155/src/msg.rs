@@ -24,6 +24,7 @@ pub enum Cw1155ExecuteMsg {
         from: String,
         /// if `to` is not contract, `msg` should be `None`
         to: String,
+        // batch of tuple of tokenId, amount, and uri(not used so can be empty))
         batch: Vec<(TokenId, Uint128, String)>,
         /// `None` means don't call the receiver interface
         msg: Option<Binary>,
@@ -34,14 +35,15 @@ pub enum Cw1155ExecuteMsg {
         to: String,
         token_id: TokenId,
         value: Uint128,
-        /// `None` means don't call the receiver interface
         uri: String,
+        /// `None` means don't call the receiver interface
         msg: Option<Binary>,
     },
     /// BatchMint is a base message to mint multiple types of tokens in batch.
     BatchMint {
         /// If `to` is not contract, `msg` should be `None`
         to: String,
+        // batch of tuple of tokenId, amount, and uri of tokens
         batch: Vec<(TokenId, Uint128, String)>,
         /// `None` means don't call the receiver interface
         msg: Option<Binary>,
@@ -55,7 +57,8 @@ pub enum Cw1155ExecuteMsg {
     /// BatchBurn is a base message to burn multiple types of tokens in batch.
     BatchBurn {
         from: String,
-        batch: Vec<(TokenId, Uint128,String)>,
+        // batch of tuple of tokenId, amount, and uri(not used so can be empty) of tokens
+        batch: Vec<(TokenId, Uint128, String)>,
     },
     /// Allows operator to transfer / send any token from the owner's account.
     /// If expiration is set, then this allowance has a time/height limit

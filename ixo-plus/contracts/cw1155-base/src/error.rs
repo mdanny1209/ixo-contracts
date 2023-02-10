@@ -5,7 +5,7 @@ use thiserror::Error;
 pub enum ContractError {
     #[error("{0}")]
     Std(#[from] StdError),
-    
+
     #[error("token_id already claimed")]
     Claimed {},
 

@@ -77,7 +77,7 @@ pub fn approved_for_all(
 pub fn token_info(deps: Deps, token_id: String) -> StdResult<TokenInfoResponse> {
     let url = TOKENS.load(deps.storage, &token_id)?;
 
-    Ok(TokenInfoResponse {url })
+    Ok(TokenInfoResponse { url })
 }
 
 pub fn is_approved_for_all(

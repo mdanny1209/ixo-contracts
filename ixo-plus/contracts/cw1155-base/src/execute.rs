@@ -72,7 +72,7 @@ pub fn send_from(
 
     let event = transfer_inner(
         &mut deps,
-        Some(&from_addr), 
+        Some(&from_addr),
         Some(&to_addr),
         &token_id,
         amount,
@@ -100,17 +100,18 @@ pub fn mint(
     to: String,
     token_id: TokenId,
     amount: Uint128,
-    //Addition to save uri as token info
-    uri: String,
+        //Addition to save uri as token info
+        uri: String,
     msg: Option<Binary>,
 ) -> Result<Response, ContractError> {
     let ExecuteEnv { mut deps, info, .. } = env;
-    let data = &uri;
+
     let to_addr = deps.api.addr_validate(&to)?;
 
     if info.sender != MINTER.load(deps.storage)? {
         return Err(ContractError::Unauthorized {});
     }
+
     //If token id exists already do not mint any more.
     if TOKENS.has(deps.storage, &token_id) {
         return Err(ContractError::Unauthorized {});
@@ -134,13 +135,10 @@ pub fn mint(
         )]
     }
 
-    
-
     // insert if not exist
     if !TOKENS.has(deps.storage, &token_id) {
-        // we must save some valid data here
-        //Addition to save uri as token_info
-        TOKENS.save(deps.storage, &token_id, &data)?;
+        // we must save some valid data here, Addition to save uri as token_info
+        TOKENS.save(deps.storage, &token_id, &uri)?;
     }
 
     Ok(rsp)
@@ -188,7 +186,7 @@ pub fn batch_send_from(
     guard_can_approve(deps.as_ref(), &env, &from_addr, &info.sender)?;
 
     let mut rsp = Response::default();
-    for (token_id, amount,_uri) in batch.iter() { 
+    for (token_id, amount, _uri) in batch.iter() {
         let event = transfer_inner(
             &mut deps,
             Some(&from_addr),
@@ -230,17 +228,22 @@ pub fn batch_mint(
     let mut rsp = Response::default();
 
     for (token_id, amount, uri) in batch.iter() {
+        //If token id exists already do not mint any more.
+        if TOKENS.has(deps.storage, &token_id) {
+            return Err(ContractError::Unauthorized {});
+        }
+
         let event = transfer_inner(&mut deps, None, Some(&to_addr), token_id, *amount)?;
         event.add_attributes(&mut rsp);
 
         // insert if not exist
         if !TOKENS.has(deps.storage, token_id) {
             // we must save some valid data here
-            TOKENS.save(deps.storage, token_id, uri)?;
+            TOKENS.save(deps.storage, token_id, &uri)?;
         }
     }
 
-    if let Some(msg) = msg { 
+    if let Some(msg) = msg {
         rsp.messages = vec![SubMsg::new(
             Cw1155BatchReceiveMsg {
                 operator: info.sender.to_string(),
@@ -271,7 +274,7 @@ pub fn batch_burn(
     guard_can_approve(deps.as_ref(), &env, &from_addr, &info.sender)?;
 
     let mut rsp = Response::default();
-    for (token_id, amount,_uri) in batch.into_iter() {
+    for (token_id, amount, _uri) in batch.into_iter() {
         let event = transfer_inner(&mut deps, Some(&from_addr), None, &token_id, amount)?;
         event.add_attributes(&mut rsp);
     }
