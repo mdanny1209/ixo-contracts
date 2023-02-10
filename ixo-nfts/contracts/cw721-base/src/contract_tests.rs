@@ -1,5 +1,4 @@
 #![cfg(test)]
-use std::collections::HashMap;
 use cosmwasm_std::testing::{mock_dependencies, mock_env, mock_info};
 use cosmwasm_std::{from_binary, to_binary, CosmosMsg, DepsMut, Empty, Response, WasmMsg};
 
@@ -16,7 +15,7 @@ const MINTER: &str = "merlin";
 const CONTRACT_NAME: &str = "Magic Power";
 const SYMBOL: &str = "MGK";
 
-fn setup_contract(deps: DepsMut<'_>) -> Cw721Contract<'static, Extension, Empty> {
+fn setup_contract(deps: DepsMut<'_>) -> Cw721Contract<'static, Extension, Empty, Empty, Empty> {
     let contract = Cw721Contract::default();
     let msg = InstantiateMsg {
         name: CONTRACT_NAME.to_string(),
@@ -32,7 +31,7 @@ fn setup_contract(deps: DepsMut<'_>) -> Cw721Contract<'static, Extension, Empty>
 #[test]
 fn proper_instantiation() {
     let mut deps = mock_dependencies();
-    let contract = Cw721Contract::<Extension, Empty>::default();
+    let contract = Cw721Contract::<Extension, Empty, Empty, Empty>::default();
 
     let msg = InstantiateMsg {
         name: CONTRACT_NAME.to_string(),
