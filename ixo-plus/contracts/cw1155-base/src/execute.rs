@@ -114,7 +114,7 @@ pub fn mint(
 
     //If token id exists already do not mint any more.
     if TOKENS.has(deps.storage, &token_id) {
-        return Err(ContractError::Unauthorized {});
+        return Err(ContractError::Claimed {});
     }
 
     let mut rsp = Response::default();
@@ -230,7 +230,7 @@ pub fn batch_mint(
     for (token_id, amount, uri) in batch.iter() {
         //If token id exists already do not mint any more.
         if TOKENS.has(deps.storage, &token_id) {
-            return Err(ContractError::Unauthorized {});
+            return Err(ContractError::Claimed {});
         }
 
         let event = transfer_inner(&mut deps, None, Some(&to_addr), token_id, *amount)?;

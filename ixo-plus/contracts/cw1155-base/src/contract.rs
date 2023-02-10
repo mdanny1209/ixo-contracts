@@ -55,7 +55,7 @@ pub fn execute(
             to,
             token_id,
             value,
-            uri
+            uri,
             msg,
         } => execute::mint(env, to, token_id, value, uri, msg),
         Cw1155ExecuteMsg::BatchMint { to, batch, msg } => execute::batch_mint(env, to, batch, msg),
