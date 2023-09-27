@@ -1,6 +1,6 @@
 [package]
 name = "ixo-increment"
-version = "0.13.4"
+version = "0.1.0"
 authors = [
   "Daniel <mdanny1209@gmail.com>",
 ]
